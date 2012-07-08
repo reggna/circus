@@ -1,0 +1,43 @@
+<project name="circus" default="build">
+  <description>Cute IRC Underlying Server</description>
+  <property name="source.dir"    value="src" />
+  <property name="build.dir"     value="build" />
+  <property name="classes.dir"   value="${build.dir}/classes" />
+  <property name="jar.dir"       value="${build.dir}/jar" />
+  <property name="debug"         value="true" />
+
+  <target name="build" depends="build-circus" />
+
+  <target name="build-circus" description="Standard build">
+    <echo>Building...</echo>
+    <mkdir dir="${classes.dir}" />
+    <javac srcdir="${source.dir}" destdir="${classes.dir}" debug="${debug}">
+    </javac>
+  </target>
+
+  <target name="jar" depends="build" description="Build jar file">
+    <echo>Building jar package...</echo> 
+    <mkdir dir="${jar.dir}" />
+    <jar destfile="${jar.dir}/circus.jar">
+      <manifest>
+        <attribute name="Implementation-Title" value="Circus" />
+        <attribute name="Implementation-Version" value="Pre-Alpha" />
+        <attribute name="Built-By" value="${user.name}" />
+      </manifest>
+      <fileset dir="${classes.dir}" />
+    </jar>
+  </target> 
+
+  <target name="javadoc">
+    <echo>Building documentation...</echo>
+    <javadoc source="${ant.build.javac.source}" sourcepath="${source.dir}" destdir="${javadoc.dir}">
+    </javadoc>
+  </target>
+
+  <target name="clean">
+    <echo>Cleaning...</echo>
+    <delete dir="${build.dir}"/>
+    <delete dir="${javadoc.dir}"/>
+  </target>
+
+</project>
